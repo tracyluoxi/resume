@@ -1,11 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <script src="js/jquery-2.2.3.js"></script>
 </head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-decoration: none;
+    }
+    body{
+        width:100%;
+        overflow: hidden;
+        position:relative;
+    }
+    #header{
+        width: 100%;
+        position:absolute;
+        top:0;
+        left:0;
+        z-index:998;
+        background: #ffcf05 url("img/top_bg.png")  left bottom no-repeat;
+        transition: all ease-out 1s;
+    }
+    #header .logo{
+        width:80px;
+        height:80px;
+        position: absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        margin: auto;
+
+    }
+
+    #header .navbar{
+        position:fixed;
+        right:30px;
+        top:0;
+        z-index:1000;
+        float:right;
+        height:20px;
+        background-color: #ffcf05 ;
+        border-radius: 10px;
+        opacity: 0;
+        transition: all ease-out 1s;
+    }
+    #header .navbar li{
+        float:left;
+        padding: 0 10px;
+    }
+    #header .navbar li a:hover{color:red;}
+
+    .process{
+        width:200px;
+        height:20px;
+        background-color: #ccc;
+        border-radius: 10px;
+        opacity: 1;
+        transition:  all ease-out 1.2s;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        margin-top: 80px;
+
+    }
+    .process .loadding{
+        background-color:#FF00FF;
+        display: inline-block;
+        width:0;
+        height: 100%;
+        transition:  all ease-out 1s;
+        border-radius: 10px;
+    }
+
+
+    /*
+    *banner
+    */
+    #about_tracy{
+        height:620px;
+        position: relative;
+        background:#060e21 url("img/bg.jpg") no-repeat center top;
+        overflow: hidden;
+    }
+    #about_tracy .red{
+        width:100%;
+        height:620px;
+        position:absolute;
+
+        background:url("img/print_red_1440.png") no-repeat center 90px;
+    }
+    #about_tracy .purple{
+        width:100%;
+        height:100%;
+        position:absolute;
+        background:url("img/print_purple_1440.png") no-repeat -150px center;
+    }
+    #about_tracy .blue{
+         width:100%;
+         height:620px;
+         position:absolute;
+         background:url("img/print_blue_1440.png") no-repeat center 90px;
+     }
+    #about_tracy .yellow{
+        width:100%;
+        height:620px;
+        position:absolute;
+        background:url("img/print_yellow_1440.png") no-repeat center 60px;
+    }
+    #about_tracy .yellow_dots{
+        width:100%;
+        height:620px;
+        position:absolute;
+        background:url("img/ink_dots_far_1440.png") no-repeat center 60px;
+    }
+    #about_tracy .dots{
+        width:100%;
+        height:620px;
+        position:absolute;
+        background:url("img/dots.png") no-repeat center 50px;
+    }
+
+    .profile{
+        position: absolute;
+        width:200px;
+        top:90px;
+        left:0;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+    }
+    .communicate{
+        width: 62px;
+        height: 280px;
+        position:fixed;
+        right:20px;
+        top:220px;
+        opacity: .5;
+        transition: .5s;
+    }
+    .communicate:hover{
+        opacity: 1;
+    }
+    .communicate .sideNav{
+        width: 60px;
+        height:60px;
+        margin-bottom: 15px;
+        cursor:pointer;
+        position: relative;
+    }
+    .communicate .sideNav span{
+        width:0px;
+        text-align: right;
+        font-size:16px;
+        color:#fff;
+        position:absolute;
+        right:70px;
+        display: block;
+        opacity: 0;
+        transition:1.2s;
+        overflow: hidden;
+    }
+
+    .communicate .sideNav:hover span{
+        width:145px;
+        display:block;
+        opacity: 1;
+
+    }
+
+    .communicate .qq{
+        background: url("img/qq.png") no-repeat center;
+    }
+
+    .communicate .phone{
+        background: url("img/phone.png") no-repeat center;
+    }
+    .communicate .weixin{
+        background: url("img/weixin.png") no-repeat center;
+    }
+    .communicate .top{
+        display: block;
+        background: url("img/top.png") no-repeat center;
+    }
+
+    .communicate .qqnum{
+        top:22px;
+    }
+    .communicate .tel{
+        top:22px;
+    }
+    .communicate .myweixin{
+        top:0;
+    }
+    .communicate .myweixin img{
+        width:140px;
+        height:140px;
+
+    }
+    .tianqi{
+        position: absolute;
+        top:0;
+        left:-300px;
+    }
+    .weather{
+        height: 40px;
+        line-height:40px;
+        padding-left:20px;
+        /*margin:5px;*/
+        color:forestgreen;
+        opacity: 0;
+    }
+    .search{
+        opacity: 0;
+    }
+    .cityname{
+        width:150px;
+        height:20px;
+        margin-left:20px;
+        border:1px solid forestgreen;
+        text-indent: 10px;
+        outline: none;
+        font-size: 12px;
+    }
+    .btn{
+
+        height:20px;
+        vertical-align: baseline;
+        font-size: 12px;
+        color:#fff;
+        background-color: #3388ff;
+        border:1px solid #3388ff;
+        width:50px;
+    }
+</style>
 <body>
-	<h1>hello world</h1>
-	<img src="img/miao.png" alt="">
+<article class="container">
+    <header id="header">
+        <!--天气-->
+        <div class="tianqi">
+            <p class="weather">未知</p>
+            <div class="search">
+                <input type="text" class="cityname" placeholder="请输入城市名">
+                <button class="btn">切换</button>
+            </div>
+        </div>
+
+
+
+        <!--我的logo-->
+        <img class="logo" src="img/miao.png" alt="Tracy罗"/>
+        <!--右边导航栏-->
+        <ul class="navbar">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">关于Tracy罗</a></li>
+            <li><a href="#">履历</a></li>
+            <li><a href="#">技能</a></li>
+            <li><a href="#">联系我</a></li>
+
+        </ul>
+        <!--进度条-->
+        <div class="process">
+            <span class="loadding"></span>
+        </div>
+    </header>
+<!--第一个页面-->
+    <div id="about_tracy">
+        <img class="profile" src="img/profile.png" alt="个人简介"/>
+        <div class="red banner" style="top:30px;left:50px;"></div>
+        <div class="purple banner" style="top:0;left:0;"></div>
+        <div class="blue banner" style="top:0;left:50px;"></div>
+
+        <div class="yellow banner" style="top:-30px;left:50px;"></div>
+        <div class="yellow_dots banner" style="top:0;left:0;">
+            <div class="mydetail">
+                <p class="title">个人简介</p>
+                <p class="neirong">
+                    Tracy罗/1993年11月/射手座/湖南长沙；<br/>
+                    爱好：旅行、健身、电影、看书；
+                    梦想：驾着越野车行万里路，让我的足迹遍布世界各地。
+                </p>
+            </div>
+        </div>
+
+        <div class="dots banner" style="top:0;left:0;"></div>
+    </div>
+    <div class="communicate">
+        <div class="qq sideNav">
+            <span class="qqnum">QQ:458719619</span>
+        </div>
+
+        <div class="phone sideNav">
+            <span class="tel">TEL:18511620922</span>
+        </div>
+
+        <div class="weixin sideNav">
+            <span class="myweixin">
+            <img src="img/myweixin.jpg" alt="我的微信"/>
+        </span>
+        </div>
+
+        <a class="top sideNav" href="#"></a>
+    </div>
+
+</article>
+
+
+
 </body>
+<script>
+
+    var header = document.getElementById("header");
+    var headerHeight = document.documentElement.clientHeight||document.body.clientHeight;
+    var loadding = document.getElementsByClassName("loadding").item(0);
+    var banner = document.getElementsByClassName("banner");
+    var about_tracy = document.getElementById("about_tracy");
+    var profile = document.getElementsByClassName("profile").item(0);
+    var sideNav = document.getElementsByClassName("sideNav");
+
+
+    header.style.height = headerHeight + "px";
+    window.onload = function(){
+
+        loadding.style.width = "100%";
+        document.getElementsByClassName("process").item(0).style.opacity= 0;
+    };
+
+    setTimeout(function(){
+        document.getElementsByClassName("navbar").item(0).style.opacity= 1;
+        document.getElementsByClassName("navbar").item(0).style.top= "38px";
+        $(".weather").animate({opacity:1},1000);
+        $(".search").animate({opacity:1},1000);
+        $(".tianqi").animate({left:"10px"},1000);
+        header.style.height = "90px";
+    },800);
+
+//给about_tracy加鼠标移动事件
+
+    about_tracy.onmousemove = function(event){
+
+        var X = event.offsetX;
+        var Y = event.offsetY;
+        banner[0].style.left=50+.035*(X-600) + "px";
+        banner[0].style.top=30+.07*(Y-300) + "px";
+
+        banner[1].style.left=.06*(X-600) + "px";
+        banner[1].style.top=.12*(Y-300) + "px";
+
+        banner[2].style.left=50+.05*(X-600) + "px";
+        banner[2].style.top=.1*(Y-300) + "px";
+
+        banner[3].style.left=50+.04*(X-600) + "px";
+        banner[3].style.top=-30+.08*(Y-300) + "px";
+
+        banner[4].style.left=.08*(X-600) + "px";
+        banner[4].style.top=.16*(Y-300) + "px";
+
+        banner[5].style.left=.07*(X-600) + "px";
+        banner[5].style.top=.14*(Y-300) + "px";
+
+    };
+
+//    个人简介框
+
+    function imgMove(){
+        profile.style.top=Math.random()*478+90+"px";
+        profile.style.left=Math.random()*(about_tracy.offsetWidth-290)+"px";
+    }
+    var timer;
+    setTimeout(function(){
+        profile.style.display = "block";
+        timer = setInterval(imgMove,1000);
+    },2000);
+
+    profile.onmouseover = function(){
+        clearInterval(timer);
+    };
+    profile.onmouseout = function(){
+        timer = setInterval(imgMove,1000);
+    };
+
+
+</script>
+
+<script>
+
+    $(function(){
+
+        getWeather("北京");
+
+
+            $('.btn').click(function(){
+
+                if($('.cityname').val()){
+                    getWeather($('.cityname').val());
+                    $('.cityname').val("");
+                }else{
+                    alert("请输入城市名")
+                }
+
+            });
+
+
+            $(".cityname").keydown(function(event){
+                event=document.all?window.event:event;
+                if((event.keyCode || event.which)==13){
+                    $(".btn").click();
+                }
+            });
+
+
+
+
+
+    });
+
+
+
+
+
+    function getWeather(cityname){
+        $.ajax({
+            type:"get",
+            url:"http://op.juhe.cn/onebox/weather/query?callback=getData",
+            dataType:"jsonp",
+            data:{
+                "cityname":cityname,
+                "key": "8ddbf7165943c05906f86ac22afdced6"
+            },
+            success:function(txt){
+
+                if(txt.result){
+                    var DATA = txt.result.data;
+//                console.log(DATA);
+                    var cityname=DATA.realtime.city_name +"&nbsp;&nbsp;&nbsp;";
+                    var info = DATA.realtime.weather.info +"&nbsp;&nbsp;&nbsp;";
+                    var deg = DATA.realtime.weather.temperature+'°C' +"&nbsp;&nbsp;&nbsp;";
+
+
+                    if(DATA.pm25.pm25){
+                        var quality = DATA.pm25.pm25.quality +" ";
+                        var curpm = DATA.pm25.pm25.curPm;
+                        $('.weather').html(cityname+info+deg+quality+curpm);
+
+                    }else{
+
+                        $('.weather').html(cityname+info+deg);
+                    }
+                }else{
+                    alert("未找到该城市")
+                }
+
+
+            },
+            error:function(){
+                alert("数据请求失败")
+            }
+
+        });
+    }
+</script>
 </html>
