@@ -643,10 +643,24 @@
 </article>
 
 
-
+<textarea id="msg" cols="30" rows="5"></textarea>
+<button id="send">提交</button>
+<ul class="msgInfo"></ul>
 </body>
 <script>
-
+    var msg=[];
+	$("#send").click(function(){
+		msg.push($("#msg").val());
+		console.log(msg);
+		$(".msgInfo").html("");
+		var html = "";
+		for(var i=0;i<msg.length;i++){
+			html+="<li>"+msg[i]+"</li>";
+		}
+		$(".msgInfo").html(html);
+	});
+    
+    
     var header = document.getElementById("header");
     var headerHeight = document.documentElement.clientHeight || document.body.clientHeight;
     var loadding = document.getElementsByClassName("loadding").item(0);
